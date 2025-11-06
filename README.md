@@ -6,17 +6,17 @@ AI features for San3a platform
 - install miniconda and add it to the path
 - ### create a new conda environment using this comand
 ```bash
-$ conda create -n san3a python=3.13
+conda create -n san3a python=3.13
 ```
 - ### activate the environment using this command
 ```bash
-$ conda activate san3a
+conda activate san3a
 ```
 - ### install requirements
 ```bash
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 - ### add your env variables like the .env.example file
 ```bash
-$ cp .env.example .env
+cp .env.example .env
 ```
