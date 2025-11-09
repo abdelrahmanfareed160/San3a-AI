@@ -15,14 +15,16 @@ async def upload_file(project_id: str, file: UploadFile,
     
     # عايزين هنا نتاكد ان الفايل مطابق المواصفات وبعد كدههنعدل على اسمه ونرفعه 
     # اللوجيك في الكنترولر
+
     data_contrtoller = DataController()
     is_valid, response_signal, status_code = data_contrtoller.validate_file(file=file)
-    return JSONResponse(
-        status_code=status_code,
-        content={
-            "message": response_signal
-        }
-    )
+    
+    if not is_valid:
+        return JSONResponse(
+            status_code=status_code,
+            content={
+                "message": response_signal
+            }
+        )
 
-    # الثوابت في الموديلز
-    # الملفات في الاسيتس
+    

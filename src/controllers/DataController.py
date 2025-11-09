@@ -1,6 +1,7 @@
 from .BaseController import BaseController
 from fastapi import UploadFile, status
 from models import ResponseSignal
+from models import 
 
 class DataController(BaseController):
 
@@ -21,3 +22,7 @@ class DataController(BaseController):
             return False, ResponseSignal.FILE_SIZE_INVALID.value, status.HTTP_400_BAD_REQUEST
         
         return True, ResponseSignal.FILE_IS_VALID.value, status.HTTP_200_OK
+    
+
+    def convert_to_pandas(self, file: UploadFile):
+        pass
