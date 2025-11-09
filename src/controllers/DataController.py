@@ -1,5 +1,6 @@
 from .BaseController import BaseController
-from fastapi import UploadFile
+from fastapi import UploadFile, status
+from models import ResponseSignal
 
 class DataController(BaseController):
 
@@ -14,9 +15,9 @@ class DataController(BaseController):
         file_size = file.size
 
         if file_type not in self.app_settings.ALLOWED_FILE_TYPE:
-            return False, "invalid type"
+            return False, ResponseSignal.FILE_TYPE_INVALID.value, status.HTTP_400_BAD_REQUEST
         
         if file_size > self.app_settings.MAX_FILE_SIZE_MB * self.MB_SIZE:
-            return False, "size is bigger than 25mb"
+            return False, ResponseSignal.FILE_SIZE_INVALID.value, status.HTTP_400_BAD_REQUEST
         
-        return True, "File Is Valid"
+        return True, ResponseSignal.FILE_IS_VALID.value, status.HTTP_200_OK
