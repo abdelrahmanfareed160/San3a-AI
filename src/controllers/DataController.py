@@ -1,7 +1,8 @@
 from .BaseController import BaseController
 from fastapi import UploadFile, status
 from models import ResponseSignal
-from models import 
+from models import FunctionsMap
+import pandas as pd
 
 class DataController(BaseController):
 
@@ -21,8 +22,9 @@ class DataController(BaseController):
         if file_size > self.app_settings.MAX_FILE_SIZE_MB * self.MB_SIZE:
             return False, ResponseSignal.FILE_SIZE_INVALID.value, status.HTTP_400_BAD_REQUEST
         
-        return True, ResponseSignal.FILE_IS_VALID.value, status.HTTP_200_OK
+        return True, ResponseSignal.FILE_UPLOAD_SUCCESS.value, status.HTTP_200_OK
     
-
-    def convert_to_pandas(self, file: UploadFile):
-        pass
+    
+    def embedd_data(self, file: UploadFile):
+        """Convert data into embeddings and upload it on qdrant"""
+    

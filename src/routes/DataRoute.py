@@ -23,8 +23,12 @@ async def upload_file(project_id: str, file: UploadFile,
         return JSONResponse(
             status_code=status_code,
             content={
+                "check" : is_valid,
                 "message": response_signal
             }
         )
+    
+    data_contrtoller.embedd_data()
+        
 
     
