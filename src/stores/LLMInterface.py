@@ -10,16 +10,16 @@ class LLMInterface(ABC):
         pass
 
     @abstractmethod
-    def set_embedding_model(self, model_id: str):
+    def set_embedding_model(self, model_id: str, embedding_size: int):
         pass
 
     @abstractmethod
-    def generate_text(self, prompt: str, max_output_tokens: int,
+    def generate_text(self, prompt: str, chat_history: list=[], max_output_tokens: int=None,
                       temprature: float = None):
         pass
 
     @abstractmethod
-    def embed_text(self, text: str, document_type: str):
+    def embed_text(self, text: str, document_type: str=None):
         # document type changes how the llm will embed the text
         pass
 
