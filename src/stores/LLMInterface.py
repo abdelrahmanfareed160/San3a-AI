@@ -19,7 +19,7 @@ class LLMInterface(ABC):
         pass
 
     @abstractmethod
-    def embed_text(self, text: str, document_type: str=None):
+    def embed_text(self, text: str, input_type: str=None):
         # document type changes how the llm will embed the text
         pass
 
