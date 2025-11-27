@@ -85,9 +85,11 @@ class OpenAiProvider(LLMInterface):
         if not self.embedding_model_id: 
             self.logger.error("embedding model was not set")
 
+        processed_text = self.process_prompt(text)
+
         response = self.client.embeddings.create(
             model=self.embedding_model_id,
-            input=text,
+            input=processed_text,
             document_type=document_type
         )
 
