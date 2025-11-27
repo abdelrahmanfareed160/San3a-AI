@@ -76,25 +76,23 @@ class OpenAiProvider(LLMInterface):
         return prompt[:self.max_input_characters].strip()
 
     def set_embedding_model(self, model_id: str, embedding_size: int):
-        # self.embedding_model_id = model_id
-        # self.embedding_model_size = embedding_size
-        raise NotImplementedError
+        self.embedding_model_id = model_id
+        self.embedding_model_size = embedding_size
 
     def embed_text(self, text: str, document_type: str=None):
-        # if not self.client: 
-        #     self.logger.error("openai client was not set")
-        # if not self.embedding_model_id: 
-        #     self.logger.error("embedding model was not set")
+        if not self.client: 
+            self.logger.error("openai client was not set")
+        if not self.embedding_model_id: 
+            self.logger.error("embedding model was not set")
 
-        # response = self.client.embeddings.create(
-        #     model=self.embedding_model_id,
-        #     input=text,
-        #     document_type=document_type
-        # )
+        response = self.client.embeddings.create(
+            model=self.embedding_model_id,
+            input=text,
+            document_type=document_type
+        )
 
-        # if not response or not response.data or len(response.data)  == 0 or not response.data[0].embedding:
-        #     self.logger.error("error while embedding with openai")
-        #     return None
+        if not response or not response.data or len(response.data)  == 0 or not response.data[0].embedding:
+            self.logger.error("error while embedding with openai")
+            return None
         
-        # return response.data[0].embedding
-        raise NotImplementedError
+        return response.data[0].embedding
