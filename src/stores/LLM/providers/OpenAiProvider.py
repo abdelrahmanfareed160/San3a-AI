@@ -79,7 +79,7 @@ class OpenAiProvider(LLMInterface):
         self.embedding_model_id = model_id
         self.embedding_model_size = embedding_size
 
-    def embed_text(self, text: str, document_type: str=None):
+    def embed_text(self, text: str, input_type: str=None):
         if not self.client: 
             self.logger.error("openai client was not set")
         if not self.embedding_model_id: 
@@ -90,7 +90,7 @@ class OpenAiProvider(LLMInterface):
         response = self.client.embeddings.create(
             model=self.embedding_model_id,
             input=processed_text,
-            document_type=document_type
+            document_type=input_type
         )
 
         if not response or not response.data or len(response.data)  == 0 or not response.data[0].embedding:
