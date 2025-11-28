@@ -15,3 +15,10 @@ class CohereEnums(Enum):
     ASSISTANT = "assistant"
     SYSTEM = "system"
     TOOL = "tool"
+
+    QUERY = "search_query"
+    DOCUMENT = "search_document"
+
+class DocumentTypeEnums(Enum):
+    DOCUMENT = "document"
+    QUERY = "query"
