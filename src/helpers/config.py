@@ -10,6 +10,18 @@ class Settings(BaseSettings):
     QDRANT_API_URL: str
     QDRANT_API_KEY: str
 
+    GENERATION_BACKEND: str
+    EMBEDDING_BACKEND: str
+
+    OPENAI_API_KEY: str
+    OPENAI_API_URL: str
+
+    COHERE_API_KEY:str
+
+    GENERATION_MODEL_ID: str
+    EMBEDDING_MODEL_ID: str
+    EMBEDDING_SIZE: float
+
     class Config:
         env_file = ".env"
 
