@@ -1,5 +1,5 @@
 from ...LLMInterface import LLMInterface
-from ...LLMEnums import CohereEnums
+from ...LLMEnums import CohereEnums, DocumentTypeEnums
 import cohere
 import logging
 
@@ -17,7 +17,7 @@ class CohereProvider(LLMInterface):
         self.max_output_characters = max_output_characters
         self.temprature = temprature
 
-        self.client = cohere.client_v2(
+        self.client = cohere.client(
             api_key=self.api_key
         )
 
@@ -58,15 +58,19 @@ class CohereProvider(LLMInterface):
             self.logger.error("Embedding model was not set")
         
         text_inputs = self.process_embedding_text(input=text, type=input_type)
+        
+        type = CohereEnums.DOCUMENT.value
+        if input_type == DocumentTypeEnums.QUERY.value:
+            type = CohereEnums.QUERY.value
 
         response = self.client.embed(
             inputs=text_inputs,
             model=self.embedding_model_id,
-            input_type=input_type,
+            input_type=type,
             embedding_type=["float"],
         )
         
-        if not response or not response.embeddings or len(response.embeddings) == 0 or not response.embeddings.float:
+        if not response or not response.embeddings or not response.embeddings.float:
             self.logger.error("Error while embed texts")
         
         return response.embeddings.float
@@ -81,13 +85,13 @@ class CohereProvider(LLMInterface):
         max_output_tokens = max_output_tokens if max_output_tokens else self.max_output_characters
         temprature = temprature if temprature else self.temprature
         processed_prompt = self.process_prompt(prompt=prompt)
-        chat_history.append(
-            self.construct_prompt(processed_prompt, CohereEnums.USER.value)
-        )
 
         response = self.client.chat(
             model=self.generation_model_id,
-            messages=chat_history
+            chat_history=chat_history,
+            message=processed_prompt,
+            temprature=temprature,
+            max_tokens=max_output_tokens
         )
 
         if not response or not response.message or not response.message.content or not response.message.content.text:
